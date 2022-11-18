@@ -14,7 +14,7 @@
 (необходимые значения добавьте с помощью BOM)
 */
 
-console.log(`с помощью браузера ${navigator.appName} я открыла страничку ${location.href}`);
+console.log(`с помощью браузера ${navigator.userAgent} я открыла страничку ${location.href}`);
 
 /*
 Задание 2
@@ -58,9 +58,10 @@ for (let i = 0; i < document.querySelector('#list').children.length; i++) {
 */
 
 let p = document.createElement('p');
-document.body.appendChild(p).innerText = 'information';
 p.style.fontSize = '36px';
 p.style.fontWeight = 'bold';
+document.body.appendChild(p).innerText = 'information';
+
 
 /*
 Задание 5
@@ -70,13 +71,13 @@ p.style.fontWeight = 'bold';
 После заголовка подготовить в html пустой параграф. С помощью js добавить в него сегодняшнюю дату.
 */
 
-
-document.getElementById('date').innerText = new Date().toLocaleDateString();
-
 // ДЛЯ СЕБЯ
-// let newDate = new Date();
-// let htmlDate = document.getElementById('date'); 
-// htmlDate.innerText = new Date().toLocaleDateString();
+// document.getElementById('date').innerText = new Date().toLocaleDateString();
+
+
+let newDate = new Date();
+let htmlDate = document.getElementById('date'); 
+htmlDate.innerText = new Date().toLocaleDateString();
 
 
 /*
@@ -211,7 +212,8 @@ document.body.appendChild(div);
 
 for (let key of linksArr) {
     let createLink = document.createElement('a');
-    createLink.innerText = key + '\n';
+    createLink.innerText = key ;
+    createLink.style.display = 'block';
     createLink.setAttribute('target', '_blank');
     createLink.setAttribute('href', key);
     div.appendChild(createLink);
@@ -225,7 +227,7 @@ for (let key of linksArr) {
 ПОДСКАЗКА Для удаления DOM-элементов можно использовать метод element.remove()
 */
 
-let remove = document.querySelectorAll('#forRemove').forEach(element => element.remove());
+let remove = document.querySelectorAll('.forRemove').forEach(element => element.remove());
 
 
 /*
@@ -266,6 +268,7 @@ td2.style.border = "1px solid #000";
 table.appendChild(string1);
 
 function usersInform (array) {
+    
     array.forEach(obj => {
         let string = document.createElement('tr');
         let td1 = document.createElement('td');
@@ -281,3 +284,74 @@ function usersInform (array) {
 }
 usersInform(users);
 
+/*
+Задание 12
+Есть верстка: https://teenscool1.notion.site...
+С помощью JavaScript:
+1) Найти в коде список ul и добавить ему класс “list”.
+2) Найти в коде ссылку, находящуюся после списка ul, и добавить id=link
+3) На li через один (начиная с самого первого) установить класс “item”
+4) На все ссылки в примере установить класс “custom-link”
+*/
+
+let div1 = document.getElementById('div12');
+
+div1.children[1].className =  'list';
+
+div1.children[3].id = 'link';
+
+let lis = document.querySelector('.list');
+for (let i = 0; i < lis.children.length; i += 2) {
+    lis.children[i].className = 'item';
+}
+
+div1.querySelectorAll('a').forEach(child => child.className = 'custom-link');
+
+
+/*
+Задание 13
+
+Есть верстка: https://teenscool1.notion.site...
+С помощью JavaScript:
+1) Не используя innerHTML, добавить в список несколько li с классом ‘new-item’ и текстом ‘item’ + номер li:
+<ul>
+<li><a href="#">Link1</a></li>
+...
+<li class=”new-item”>item 5</li>
+<li class=”new-item”>item 6</li>
+</ul>
+Вручную номер li не ставить оно должно подставляться в зависимости от кол-ва лишек в списке.
+2) В каждую ссылку, которая находятся внутри списка ul, добавить по тегу strong (в каждую ссылку один strong).
+3) В начало документа (в начало body) добавить картинку img с атрибутами src и alt (текст придумайте сами). В src добавьте реальный url к картинке. Для создания элемента используйте метод createElement.
+ПОДСКАЗКА. Для добавления в конец используется метод appendChild или append, а в начало - prepand.
+4) Найти на странице элемент mark, добавить в конец его содержимого текст “green” и на сам элемент установить класс green.
+*/
+let div2 = document.getElementById('div13');
+
+let numb = prompt('how many?');
+let numb2 = Number(numb);
+let count = Number(div2.children[1].querySelectorAll('li').length);
+for (let i = count; i < (numb2 + count) ; i++) {
+    let lid = document.createElement('li');
+    lid.className = 'new-item';
+    let text = 'item ' + (i + 1);
+    lid.append(text);
+    div2.querySelector('ul').appendChild(lid);
+}
+
+
+div2.children[1].querySelectorAll('a').forEach(child => {
+    let strong = document.createElement('strong');
+    child.append(strong);
+})
+
+
+let img = document.createElement('img');
+img.setAttribute('src','zubya-metall-tehno.jpg');
+img.setAttribute('alt','wall');
+document.body.prepend(img);
+
+let mark = div2.querySelector('mark');
+let green = ' green';
+mark.append(green);
+mark.className = 'green';
